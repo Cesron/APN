@@ -198,3 +198,15 @@ error=double(valorexacto-valoraprox);
 fprintf('H%1.0f(%3.3f)= %9.15f\n\n',double(n-1),double(aprox),valoraprox);
 fprintf('El valor exacto de la función es: %.15f \n\n', valorexacto);
 fprintf('\nError: %e\n\n', error);
+
+Matlab posee un comando que permite obtener el resultado de una interpolación, 
+empleando el comando: interp1(X,Y,Xi,’método’), donde X e Y son los datos y Xi es el 
+valor para el cual deseamos obtener la información y se encuentra dentro del intervalo 
+de valores X. La opción método puede ser linear, spline, cubic, pchip, nearest, según 
+que la interpolación sea lineal, escalonada, cúbica o lo más cerca de. Además, si se 
+desea obtener una extrapolación, deberemos emplear el siguiente comando: 
+interp1(X,Y,Xi,’método’, ‘extrap’), donde X e Y son los datos y Xi es el valor para el 
+cual deseamos obtener la información y se encuentra fuera del intervalo de valores X. 
+Es de notar que cuando se realiza una interpolación lineal, en la opción método 
+podemos obviar el comando linear; pero cuando realizamos una extrapolación, en la 
+opción método debemos escribir el comando linear. 
