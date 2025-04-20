@@ -152,3 +152,5 @@ fprintf('FExacta = %9.15e\n',double(FExacta));
 Error = abs(double(FExacta)-double(FAprox));
 fprintf('Error = %9.15e\n',double(Error));
 % Fin compuesta trapecio
+clear
+clc
