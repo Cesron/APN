@@ -54,3 +54,45 @@ exacto=double(subs(d,c));
 fprintf('\nValor exacto: f�(c)= %.15f',exacto);
 fprintf('\nError: %e\n',abs(exacto-N(1,m)));
 % Fin de Richardson
+
+% Romberg
+clear
+clc
+syms x;
+f=sin(x)
+a=0
+b=pi/4
+tam=3
+h1=b-a;
+h(1)=h1;
+for i=2:tam
+h(i)=h(i-1)/2;
+end
+R=zeros(tam);
+R(1,1)=h(1)/2*(subs(f,a)+subs(f,b));
+for i=2:tam
+k=0;
+for n=1:2^(i-2)
+k=k+subs(f,a+(2*n-1)*h(i));
+end
+R(i,1)=1/2*(R(i-1,1)+h(i-1)*k);
+end
+for i=2:tam
+for j=2:i
+R(i,j)=(4^(j-1)*R(i,j-1)-R(i-1,j-1))/(4^(j-1)-1);
+end
+end
+for i=1:tam
+for j=1:i
+fprintf('R(%d,%d)= %.15f',i,j,R(i,j));
+fprintf('\n');
+end
+fprintf('\n');
+end
+fprintf('\n');
+fprintf('\nEl valor aproximado de la funci�n f(x) es: %.15f',R(tam,tam));
+exacto=double(int(f,a,b));
+fprintf('\nEl valor exacto de la integral de f(x) es: %.15f',exacto);
+error=abs(exacto-R(tam,tam));
+fprintf('\nEl error en la aproximacion es: %e\n',error);
+% Fin Romberg
