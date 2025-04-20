@@ -96,3 +96,59 @@ fprintf('\nEl valor exacto de la integral de f(x) es: %.15f',exacto);
 error=abs(exacto-R(tam,tam));
 fprintf('\nEl error en la aproximacion es: %e\n',error);
 % Fin Romberg
+
+% Compuesta Simpson
+clear
+clc
+syms x
+f=sin(x)
+a=0
+b=pi/4
+n=4
+h=(b-a)/(n);
+X0=a;
+Xn=b;
+X = 1:n-1;
+for i=1:n-1
+X(i)= a + i*h;
+end
+EPARES=0;
+for i=1:((n/2)-1)
+EPARES = EPARES + subs(f,x,X(2*i));
+end
+EIMPARES=0;
+for i=1:(n/2)
+EIMPARES = EIMPARES + subs(f,x,X(2*i-1));
+end
+FAprox = double((h/3)*(subs(f,x,X0)+2*(EPARES)+4*(EIMPARES)+subs(f,x,Xn)));
+fprintf('FAprox = %9.15e\n', double(FAprox));
+FExacta = double(int(f,a,b));
+fprintf('FExacta = %9.15e\n', FExacta);
+Error = abs(FExacta-FAprox);
+fprintf('Error = %9.15e\n',double(Error));
+% Fin Compuesta Simpson
+
+% Compuesta Trapecio
+clear
+clc
+syms x
+f=sin(x)
+a=0
+b=pi/4
+n=3
+h=(b-a)/(n);
+X = 1:n;
+for i=0:n+1
+   X(i+1)= a + i*h;
+end
+Esuma=0;
+for i=2:n
+   Esuma = Esuma + subs(f,x,X(i));
+end
+FAprox = (h/2)*(subs(f,x,X(1))+2*Esuma+subs(f,x,X(n+1)));
+fprintf('FAprox = %9.15e\n',double(FAprox));
+FExacta = int(f,a,b);
+fprintf('FExacta = %9.15e\n',double(FExacta));
+Error = abs(double(FExacta)-double(FAprox));
+fprintf('Error = %9.15e\n',double(Error));
+% Fin compuesta trapecio
