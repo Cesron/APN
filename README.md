@@ -38,3 +38,15 @@ end
 fprintf('Valor aproximado Y(%.15f)= %.15f\n',b,double(Y(n+1)));
 fprintf('Valor exacto F(%.15f)= %.15f\n',b,double(exacta));
 fprintf('Error= %e\n', double(error));
+
+
+% Sistema de ecuaciones
+syms t x y;
+A=24*exp(-2*t)-27*exp(-t)+4*cos(t)-5*sin(t);
+B=-2*exp(-2*t)+18*exp(-t)+7*cos(t)-8*sin(t);
+Dx=(-4*diff(B)-7*B+7*diff(A)-9*A-101*x)/-88;
+Dy=(7*diff(A)-4*diff(B)-8*A+5*B+101*y)/88;
+[X,Y]=dsolve('Dx=(101*x)/88 - (189*exp(-t))/44 + (277*exp(-2*t))/44 + cos(t) - (101*sin(t))/88', 'Dy=(101*y)/88 + (567*exp(-t))/88 - (277*exp(-2*t))/44','x(0)=0','y(0)=-1');
+T=[0:1/200:1/40];
+[T' double(subs(X,T))' double(subs(Y,T))']
+
